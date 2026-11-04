@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hussain Akhter | Software Engineer & Jamia Alumni</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darker: '#030712',
+                        cardBg: 'rgba(15, 23, 42, 0.65)',
+                        borderGlow: 'rgba(99, 102, 241, 0.35)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'gradient-xy': 'gradientXY 15s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        gradientXY: {
+                            '0%, 100%': { 'background-size': '400% 400%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '400% 400%', 'background-position': 'right center' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-darker text-gray-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Background Ambient Glow Effects -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div class="absolute top-1/2 -right-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-cyan-600/15 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 4s;"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-60"></div>
+    </div>
+
+    <!-- Notification Toast Message Box -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 ease-out">
+        <div class="glass-panel px-6 py-4 rounded-2xl flex items-center space-x-3 shadow-2xl border-l-4 border-l-indigo-500">
+            <div id="toast-icon" class="text-indigo-400 text-xl"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+                <h4 id="toast-title" class="font-bold text-sm text-white">Success!</h4>
+                <p id="toast-desc" class="text-xs text-gray-400">Message sent successfully.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-cyan-400 p-[2px] transition-transform duration-300 group-hover:scale-110">
+                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-black text-white text-lg">
+                            HA
+                        </div>
+                    </div>
+                    <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-indigo-400 transition-colors">
+                        Hussain<span class="text-indigo-500">.dev</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 glass-panel px-4 py-2 rounded-full shadow-lg">
+                    <a href="#hero" class="nav-link px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Home</a>
+                    <a href="#about" class="nav-link px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all">About</a>
+                    <a href="#skills" class="nav-link px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Skills</a>
+                    <a href="#projects" class="nav-link px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Projects</a>
+                    <a href="#contact" class="nav-link px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Contact</a>
+                </nav>
+
+                <!-- CTA Hire Me Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#contact" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-full group bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 group-hover:from-indigo-500 group-hover:to-cyan-400 hover:text-white text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                        <span class="relative px-6 py-2.5 transition-all ease-in duration-75 bg-slate-950 rounded-full group-hover:bg-opacity-0 font-semibold">
+                            Let's Talk <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl glass-panel text-gray-300 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10 px-6 py-6 space-y-4 animate-fadeIn">
+            <a href="#hero" class="mobile-link block text-base font-medium text-gray-300 hover:text-indigo-400">Home</a>
+            <a href="#about" class="mobile-link block text-base font-medium text-gray-300 hover:text-indigo-400">About</a>
+            <a href="#skills" class="mobile-link block text-base font-medium text-gray-300 hover:text-indigo-400">Skills</a>
+            <a href="#projects" class="mobile-link block text-base font-medium text-gray-300 hover:text-indigo-400">Projects</a>
+            <a href="#contact" class="mobile-link block text-base font-medium text-gray-300 hover:text-indigo-400">Contact</a>
+            <div class="pt-2">
+                <a href="#contact" class="w-full py-3 text-center block rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg">
+                    Let's Talk
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="relative z-10 pt-20">
+
+        <!-- 1. Hero Section -->
+        <section id="hero" class="min-h-[90vh] flex items-center justify-center relative py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-panel border border-indigo-500/30 text-indigo-300 text-xs sm:text-sm font-semibold animate-float">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Jamia Millia Islamia Alumni | Available for Opportunities</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
+                            Hi, I'm <span class="text-gradient">Hussain Akhter</span>
+                        </h1>
+                        <p class="text-xl sm:text-2xl font-medium text-indigo-300 h-8">
+                            I am a <span id="typewriter" class="text-white font-bold border-r-2 border-indigo-400 pr-1 animate-pulse">Software Engineer</span>
+                        </p>
+                        <p class="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            A passionate Software Engineer who completed a Diploma in Engineering from Jamia Millia Islamia last year. Specializing in robust backend systems, modern web apps, and clean code architecture.
+                        </p>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 text-white font-bold shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-105 transition-all duration-300 text-center">
+                            Explore Projects <i class="fa-solid fa-code ml-2"></i>
+                        </a>
+                        <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel text-white font-bold hover:bg-white/10 hover:border-indigo-500/50 hover:scale-105 transition-all duration-300 text-center">
+                            Get in Touch <i class="fa-regular fa-paper-plane ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- Tech Stack Badges -->
+                    <div class="pt-6 border-t border-white/10 space-y-3">
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Core Technologies</p>
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                            <span class="px-3.5 py-1.5 rounded-xl glass-panel text-xs font-semibold text-indigo-300 flex items-center space-x-2">
+                                <i class="fa-brands fa-react text-cyan-400 text-sm"></i> <span>React & Next.js</span>
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-xl glass-panel text-xs font-semibold text-purple-300 flex items-center space-x-2">
+                                <i class="fa-brands fa-node-js text-emerald-400 text-sm"></i> <span>Node.js</span>
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-xl glass-panel text-xs font-semibold text-cyan-300 flex items-center space-x-2">
+                                <i class="fa-solid fa-wind text-sky-400 text-sm"></i> <span>Tailwind CSS</span>
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-xl glass-panel text-xs font-semibold text-amber-300 flex items-center space-x-2">
+                                <i class="fa-brands fa-python text-amber-400 text-sm"></i> <span>Python</span>
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-xl glass-panel text-xs font-semibold text-pink-300 flex items-center space-x-2">
+                                <i class="fa-brands fa-docker text-blue-400 text-sm"></i> <span>Docker</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual Floating Card (Interactive Code Mockup) -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <div class="relative w-full max-w-md animate-float">
+                        <!-- Glowing backdrop shape -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 rounded-3xl blur-xl opacity-40 animate-pulse-slow"></div>
+                        
+                        <!-- Card Container -->
+                        <div class="relative glass-panel rounded-3xl p-6 shadow-2xl border border-white/10">
+                            <!-- Window Header Dots -->
+                            <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                </div>
+                                <span class="text-xs font-mono text-gray-400">hussain.config.ts</span>
+                            </div>
+
+                            <!-- Code Snippet Display -->
+                            <div class="font-mono text-xs sm:text-sm space-y-2 text-gray-300">
+                                <p><span class="text-purple-400">const</span> <span class="text-cyan-300">hussain</span> = &#123;</p>
+                                <p class="pl-4"><span class="text-indigo-400">name</span>: <span class="text-emerald-300">'Hussain Akhter'</span>,</p>
+                                <p class="pl-4"><span class="text-indigo-400">role</span>: <span class="text-emerald-300">'Software Engineer'</span>,</p>
+                                <p class="pl-4"><span class="text-indigo-400">education</span>: <span class="text-emerald-300">'Diploma @ Jamia Millia Islamia'</span>,</p>
+                                <p class="pl-4"><span class="text-indigo-400">graduated</span>: <span class="text-cyan-300">2025</span>,</p>
+                                <p class="pl-4"><span class="text-indigo-400">skills</span>: ['React', 'Node', 'Python', 'Tailwind'],</p>
+                                <p class="pl-4"><span class="text-indigo-400">status</span>: <span class="text-emerald-300">'Building scalable apps 🚀'</span></p>
+                                <p>&#125;;</p>
+                            </div>
+
+                            <!-- Floating badge overlay -->
+                            <div class="absolute -bottom-6 -right-6 glass-panel px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 border border-indigo-500/30 animate-float-delayed">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-600/30 flex items-center justify-center text-indigo-400 text-xl font-bold">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 font-medium">Jamia Graduate</p>
+                                    <p class="text-sm font-extrabold text-white">Class of Last Year</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. About Me Section & Education Timeline -->
+        <section id="about" class="py-28 px-4 sm:px-6 lg:px-8 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center space-y-4 mb-20">
+                    <span class="px-4 py-1.5 rounded-full glass-panel text-indigo-400 text-xs font-bold uppercase tracking-wider">Jamia Millia Islamia Alumni</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">About <span class="text-gradient">Hussain Akhter</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-base">Dedicated software engineer with a strong foundation in computer engineering from one of India's premier central universities.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    
+                    <!-- Bio Card -->
+                    <div class="lg:col-span-6 space-y-8">
+                        <div class="glass-panel p-8 rounded-3xl space-y-6 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl"></div>
+                            <h3 class="text-2xl font-bold text-white flex items-center space-x-3">
+                                <i class="fa-solid fa-user-graduate text-indigo-400"></i>
+                                <span>My Academic & Tech Journey</span>
+                            </h3>
+                            <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                                Hello! I'm <strong class="text-white font-semibold">Hussain Akhter</strong>. Last year, I successfully completed my Diploma in Engineering from <strong class="text-indigo-300">Jamia Millia Islamia</strong>, New Delhi. During my studies, I developed a rigorous problem-solving mindset and a deep fascination for full-stack software development.
+                            </p>
+                            <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                                Since graduating, I have focused on building responsive web applications, learning modern frameworks, and contributing to software projects that solve real-world problems.
+                            </p>
+
+                            <!-- Quick Stats -->
+                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/10 text-center">
+                                <div>
+                                    <h4 class="text-2xl sm:text-3xl font-black text-indigo-400">15+</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Projects Built</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl sm:text-3xl font-black text-purple-400">1 Year</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Professional Focus</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl sm:text-3xl font-black text-cyan-400">100%</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Dedication</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Timeline -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="glass-panel p-8 rounded-3xl space-y-8">
+                            <h3 class="text-2xl font-bold text-white flex items-center space-x-3">
+                                <i class="fa-solid fa-timeline text-cyan-400"></i>
+                                <span>Education & Milestones</span>
+                            </h3>
+
+                            <div class="relative pl-6 space-y-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-indigo-500 before:via-purple-500 before:to-cyan-500">
+                                
+                                <!-- Timeline Item 1 -->
+                                <div class="relative space-y-2 group">
+                                    <div class="absolute -left-[29px] top-1.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-indigo-500 group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-lg font-bold text-white">Software Engineer & Developer</h4>
+                                        <span class="text-xs font-semibold px-3 py-1 rounded-full glass-panel text-indigo-300">Present</span>
+                                    </div>
+                                    <p class="text-sm font-medium text-indigo-400">Full-Stack Web Development</p>
+                                    <p class="text-xs text-gray-400 leading-relaxed">
+                                        Building high-performance web applications using React, Tailwind CSS, Node.js, and Python with modern cloud deployment practices.
+                                    </p>
+                                </div>
+
+                                <!-- Timeline Item 2 -->
+                                <div class="relative space-y-2 group">
+                                    <div class="absolute -left-[29px] top-1.5 w-4 h-4 rounded-full bg-slate-950 border-2 border-purple-500 group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-lg font-bold text-white">Diploma in Engineering</h4>
+                                        <span class="text-xs font-semibold px-3 py-1 rounded-full glass-panel text-purple-300">Completed Last Year</span>
+                                    </div>
+                                    <p class="text-sm font-medium text-purple-400">Jamia Millia Islamia, New Delhi</p>
+                                    <p class="text-xs text-gray-400 leading-relaxed">
+                                        Graduated with comprehensive technical knowledge in computer engineering, data structures, algorithms, and electronics foundations.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skills Section with Interactive Category Tabs -->
+        <section id="skills" class="py-28 px-4 sm:px-6 lg:px-8 relative bg-slate-950/40">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center space-y-4 mb-16">
+                    <span class="px-4 py-1.5 rounded-full glass-panel text-purple-400 text-xs font-bold uppercase tracking-wider">Technical Proficiency</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Skills & <span class="text-gradient">Expertise</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-base">Explore my core technical stack spanning frontend frameworks, backend systems, and developer tools.</p>
+                </div>
+
+                <!-- Interactive Category Tabs -->
+                <div class="flex justify-center mb-12">
+                    <div class="glass-panel p-2 rounded-2xl flex space-x-2">
+                        <button onclick="switchTab('frontend')" id="btn-frontend" class="px-6 py-2.5 rounded-xl font-semibold text-sm transition-all bg-indigo-600 text-white shadow-lg">Frontend</button>
+                        <button onclick="switchTab('backend')" id="btn-backend" class="px-6 py-2.5 rounded-xl font-semibold text-sm transition-all text-gray-300 hover:text-white">Backend & DB</button>
+                        <button onclick="switchTab('tools')" id="btn-tools" class="px-6 py-2.5 rounded-xl font-semibold text-sm transition-all text-gray-300 hover:text-white">Tools & DevOps</button>
+                    </div>
+                </div>
+
+                <!-- Tab Content Containers -->
+                <div class="max-w-4xl mx-auto">
+                    
+                    <!-- Frontend Tab -->
+                    <div id="tab-frontend" class="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fadeIn">
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-react text-cyan-400 text-lg"></i><span>React & Next.js</span></span>
+                                <span class="text-xs font-bold text-indigo-400">92%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 w-[92%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-solid fa-wind text-sky-400 text-lg"></i><span>Tailwind CSS</span></span>
+                                <span class="text-xs font-bold text-indigo-400">95%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-indigo-500 to-sky-400 w-[95%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-js text-amber-400 text-lg"></i><span>JavaScript / TypeScript</span></span>
+                                <span class="text-xs font-bold text-indigo-400">90%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-indigo-500 to-amber-400 w-[90%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-html5 text-orange-400 text-lg"></i><span>HTML5 & CSS3</span></span>
+                                <span class="text-xs font-bold text-indigo-400">98%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-indigo-500 to-orange-400 w-[98%] rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backend Tab -->
+                    <div id="tab-backend" class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden animate-fadeIn">
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-node-js text-emerald-400 text-lg"></i><span>Node.js & Express</span></span>
+                                <span class="text-xs font-bold text-purple-400">88%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-emerald-400 w-[88%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-python text-amber-400 text-lg"></i><span>Python</span></span>
+                                <span class="text-xs font-bold text-purple-400">85%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-amber-400 w-[85%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-solid fa-database text-cyan-400 text-lg"></i><span>PostgreSQL & MongoDB</span></span>
+                                <span class="text-xs font-bold text-purple-400">82%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-cyan-400 w-[82%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-solid fa-server text-indigo-400 text-lg"></i><span>RESTful APIs</span></span>
+                                <span class="text-xs font-bold text-purple-400">90%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-indigo-400 w-[90%] rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tools Tab -->
+                    <div id="tab-tools" class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden animate-fadeIn">
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-git-alt text-rose-400 text-lg"></i><span>Git & GitHub</span></span>
+                                <span class="text-xs font-bold text-cyan-400">92%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-cyan-500 to-rose-400 w-[92%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-brands fa-docker text-blue-400 text-lg"></i><span>Docker</span></span>
+                                <span class="text-xs font-bold text-cyan-400">78%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-400 w-[78%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-solid fa-terminal text-emerald-400 text-lg"></i><span>Linux / Bash CLI</span></span>
+                                <span class="text-xs font-bold text-cyan-400">85%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 w-[85%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center space-x-2"><i class="fa-solid fa-cube text-purple-400 text-lg"></i><span>VS Code & Vite</span></span>
+                                <span class="text-xs font-bold text-cyan-400">95%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-cyan-500 to-purple-400 w-[95%] rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Projects Showcase Section -->
+        <section id="projects" class="py-28 px-4 sm:px-6 lg:px-8 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center space-y-4 mb-20">
+                    <span class="px-4 py-1.5 rounded-full glass-panel text-cyan-400 text-xs font-bold uppercase tracking-wider">Portfolio Showcase</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Featured <span class="text-gradient">Projects</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-base">A selection of recent applications built with modern frontend frameworks and backend architectures.</p>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Project 1 -->
+                    <div class="glass-panel rounded-3xl overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col justify-between">
+                        <div>
+                            <div class="relative h-52 overflow-hidden bg-slate-900">
+                                <img src="https://placehold.co/600x400/0f172a/818cf8?text=Jamia+Campus+Portal" alt="Campus Portal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                                <span class="absolute top-4 right-4 px-3 py-1 rounded-full glass-panel text-xs font-bold text-indigo-300">Web App</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Campus Event & Notice Hub</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    A responsive portal for college departments to publish notices, schedules, and student event notifications in real-time.
+                                </p>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    <span class="px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-300 text-xs font-medium">React</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-300 text-xs font-medium">Tailwind</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-300 text-xs font-medium">Node.js</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-white/5">
+                            <a href="#projects" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center space-x-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com" target="_blank" class="text-xs font-bold text-gray-400 hover:text-white flex items-center space-x-1">
+                                <i class="fa-brands fa-github"></i> <span>Source Code</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="glass-panel rounded-3xl overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col justify-between">
+                        <div>
+                            <div class="relative h-52 overflow-hidden bg-slate-900">
+                                <img src="https://placehold.co/600x400/0f172a/c084fc?text=CodeSnippet+Vault" alt="Code Vault" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                                <span class="absolute top-4 right-4 px-3 py-1 rounded-full glass-panel text-xs font-bold text-purple-300">Developer Tool</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">DevSnippet Vault</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    A cloud-backed code snippet manager with syntax highlighting, categorization, and instant search capabilities for developers.
+                                </p>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    <span class="px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-300 text-xs font-medium">TypeScript</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-300 text-xs font-medium">Express</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-pink-500/10 text-pink-300 text-xs font-medium">MongoDB</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-white/5">
+                            <a href="#projects" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center space-x-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com" target="_blank" class="text-xs font-bold text-gray-400 hover:text-white flex items-center space-x-1">
+                                <i class="fa-brands fa-github"></i> <span>Source Code</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="glass-panel rounded-3xl overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-white/10 flex flex-col justify-between">
+                        <div>
+                            <div class="relative h-52 overflow-hidden bg-slate-900">
+                                <img src="https://placehold.co/600x400/0f172a/38bdf8?text=TaskFlow+Manager" alt="TaskFlow" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                                <span class="absolute top-4 right-4 px-3 py-1 rounded-full glass-panel text-xs font-bold text-cyan-300">Productivity</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">TaskFlow Pro</h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    Kanban-style project management web app with drag-and-drop task boards, priority tags, and local persistence.
+                                </p>
+                                <div class="flex flex-wrap gap-2 pt-2">
+                                    <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-300 text-xs font-medium">React</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-300 text-xs font-medium">Tailwind CSS</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-300 text-xs font-medium">Vite</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-white/5">
+                            <a href="#projects" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center space-x-1">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com" target="_blank" class="text-xs font-bold text-gray-400 hover:text-white flex items-center space-x-1">
+                                <i class="fa-brands fa-github"></i> <span>Source Code</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Contact Form Section -->
+        <section id="contact" class="py-28 px-4 sm:px-6 lg:px-8 relative bg-slate-950/60">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center space-y-4 mb-20">
+                    <span class="px-4 py-1.5 rounded-full glass-panel text-indigo-400 text-xs font-bold uppercase tracking-wider">Get In Touch</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Let's Connect & <span class="text-gradient">Collaborate</span></h2>
+                    <p class="text-gray-400 max-w-xl mx-auto text-base">Have an inquiry, a project proposal, or want to discuss software engineering? Drop a message below!</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Contact Info Cards -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="glass-panel p-6 rounded-3xl space-y-2">
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-xl mb-4">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <h4 class="text-sm text-gray-400 font-medium">Email Me</h4>
+                            <p class="text-lg font-bold text-white">hussain.akhter@developer.io</p>
+                        </div>
+
+                        <div class="glass-panel p-6 rounded-3xl space-y-2">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <h4 class="text-sm text-gray-400 font-medium">Location</h4>
+                            <p class="text-lg font-bold text-white">New Delhi, India (Jamia Alumni)</p>
+                        </div>
+
+                        <div class="glass-panel p-6 rounded-3xl space-y-2">
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-600/20 text-cyan-400 flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-share-nodes"></i>
+                            </div>
+                            <h4 class="text-sm text-gray-400 font-medium">Social Profiles</h4>
+                            <div class="flex items-center space-x-3 pt-2">
+                                <a href="https://github.com" target="_blank" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:bg-indigo-600 transition-all"><i class="fa-brands fa-github"></i></a>
+                                <a href="https://linkedin.com" target="_blank" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:bg-indigo-600 transition-all"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="https://twitter.com" target="_blank" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:bg-indigo-600 transition-all"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="mailto:hussain.akhter@developer.io" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:bg-indigo-600 transition-all"><i class="fa-solid fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="lg:col-span-7">
+                        <form id="contact-form" class="glass-panel p-8 sm:p-10 rounded-3xl space-y-6 shadow-2xl relative">
+                            <div class="space-y-2">
+                                <label for="name" class="block text-sm font-semibold text-gray-300">Your Full Name</label>
+                                <input type="text" id="name" required placeholder="John Doe" class="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all text-sm">
+                                <p id="name-error" class="text-xs text-rose-400 hidden">Please enter your name.</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="email" class="block text-sm font-semibold text-gray-300">Email Address</label>
+                                <input type="email" id="email" required placeholder="john@example.com" class="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all text-sm">
+                                <p id="email-error" class="text-xs text-rose-400 hidden">Please enter a valid email address.</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="message" class="block text-sm font-semibold text-gray-300">Your Message</label>
+                                <textarea id="message" rows="5" required placeholder="Tell me about your project or inquiry..." class="w-full bg-slate-900/80 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all text-sm resize-none"></textarea>
+                                <p id="message-error" class="text-xs text-rose-400 hidden">Please enter your message.</p>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 text-white font-bold shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.01] transition-all duration-300 flex items-center justify-center space-x-2">
+                                <span>Send Message</span>
+                                <i class="fa-regular fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-white/10 py-12 px-4 sm:px-6 lg:px-8 bg-slate-950">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center font-bold text-white text-sm">
+                    HA
+                </div>
+                <span class="font-bold text-white tracking-tight">Hussain Akhter &copy; 2026. All rights reserved.</span>
+            </div>
+            <p class="text-xs text-gray-500">Software Engineer | Jamia Millia Islamia Alumni</p>
+            <a href="#hero" class="px-4 py-2 rounded-xl glass-panel text-xs font-semibold text-indigo-400 hover:text-white transition-colors flex items-center space-x-2">
+                <span>Back to Top</span>
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactions & Typewriter Effect -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar blur on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 40) {
+                navbar.classList.add('bg-slate-950/80', 'backdrop-blur-md', 'shadow-lg', 'border-b', 'border-white/10');
+            } else {
+                navbar.classList.remove('bg-slate-950/80', 'backdrop-blur-md', 'shadow-lg', 'border-b', 'border-white/10');
+            }
+        });
+
+        // Typewriter Effect
+        const roles = ["Software Engineer", "Full-Stack Developer", "Jamia Millia Islamia Alumni", "UI/UX Enthusiast"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function typeWriter() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                typewriterElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+        setTimeout(typeWriter, 1000);
+
+        // Skills Tab Switching Logic
+        function switchTab(tabName) {
+            const tabs = ['frontend', 'backend', 'tools'];
+            tabs.forEach(t => {
+                const content = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-${t}`);
+                if (t === tabName) {
+                    content.classList.remove('hidden');
+                    btn.className = "px-6 py-2.5 rounded-xl font-semibold text-sm transition-all bg-indigo-600 text-white shadow-lg";
+                } else {
+                    content.classList.add('hidden');
+                    btn.className = "px-6 py-2.5 rounded-xl font-semibold text-sm transition-all text-gray-300 hover:text-white";
+                }
+            });
+        }
+
+        // Toast notification helper
+        function showToast(title, desc, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toast-title');
+            const toastDesc = document.getElementById('toast-desc');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastTitle.textContent = title;
+            toastDesc.textContent = desc;
+
+            if (isError) {
+                toastIcon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-rose-400"></i>';
+                toast.firstElementChild.className = "glass-panel px-6 py-4 rounded-2xl flex items-center space-x-3 shadow-2xl border-l-4 border-l-rose-500";
+            } else {
+                toastIcon.innerHTML = '<i class="fa-solid fa-circle-check text-indigo-400"></i>';
+                toast.firstElementChild.className = "glass-panel px-6 py-4 rounded-2xl flex items-center space-x-3 shadow-2xl border-l-4 border-l-indigo-500";
+            }
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        // Contact Form Validation & Submission
+        const contactForm = document.getElementById('contact-form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
+        const messageError = document.getElementById('message-error');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            if (!nameInput.value.trim()) {
+                nameError.classList.remove('hidden');
+                nameInput.classList.add('border-rose-500');
+                isValid = false;
+            } else {
+                nameError.classList.add('hidden');
+                nameInput.classList.remove('border-rose-500');
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value.trim())) {
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-rose-500');
+                isValid = false;
+            } else {
+                emailError.classList.add('hidden');
+                emailInput.classList.remove('border-rose-500');
+            }
+
+            if (!messageInput.value.trim()) {
+                messageError.classList.remove('hidden');
+                messageInput.classList.add('border-rose-500');
+                isValid = false;
+            } else {
+                messageError.classList.add('hidden');
+                messageInput.classList.remove('border-rose-500');
+            }
+
+            if (isValid) {
+                showToast('Message Sent!', 'Thank you! Hussain will get back to you shortly.');
+                contactForm.reset();
+            } else {
+                showToast('Validation Error', 'Please check highlighted fields.', true);
+            }
+        });
+    </script>
+</body>
+</html>
